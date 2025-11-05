@@ -1,0 +1,12 @@
+node_modules/
+backups/
+dist/
+logs/
+ssl/
+*.log
+*.md
+*.sql
+*.sh
+docker-compose*.yml
+Dockerfile*
+nginx*.conf

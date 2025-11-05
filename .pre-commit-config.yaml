@@ -1,0 +1,62 @@
+# MediaBot Pre-commit Configuration
+# Автоматические проверки перед коммитом
+
+repos:
+  # Basic file checks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      # Security checks
+      - id: detect-private-key
+        description: 'Проверка на приватные ключи в коммите'
+      - id: check-added-large-files
+        description: 'Проверка больших файлов (>500KB)'
+        args: ['--maxkb=500']
+
+      # Code quality
+      - id: trailing-whitespace
+        description: 'Удаление лишних пробелов'
+      - id: end-of-file-fixer
+        description: 'Добавление новой строки в конец файла'
+      - id: check-merge-conflict
+        description: 'Проверка на конфликты merge'
+      - id: check-yaml
+        description: 'Проверка синтаксиса YAML'
+      - id: check-json
+        description: 'Проверка синтаксиса JSON'
+
+      # Docker and deployment
+      - id: check-case-conflict
+        description: 'Проверка конфликтов имен файлов'
+
+  # Local hooks for project-specific checks
+  - repo: local
+    hooks:
+      # Environment file security
+      - id: check-env-files
+        name: Check environment files
+        entry: bash
+        language: system
+        args: ['-c', 'echo "Checking environment files..."; for f in "$@"; do if [[ "$f" =~ \.env$ ]] || [[ "$f" =~ \.env\. ]] && [[ ! "$f" =~ (example|template) ]]; then echo "❌ Environment file detected: $f"; echo "Environment files should not be committed to git!"; exit 1; fi; done; echo "✅ No sensitive environment files to commit"', '--']
+        files: \.env.*
+        pass_filenames: true
+
+      # ESLint check using project configuration
+      - id: eslint-check
+        name: ESLint check
+        entry: npm run lint
+        language: system
+        files: \.(js|jsx|ts|tsx)$
+        pass_filenames: false
+
+      # TypeScript type checking
+      - id: typescript-check
+        name: TypeScript type check
+        entry: npm run type-check
+        language: system
+        files: \.(ts|tsx)$
+        pass_filenames: false
+
+# Конфигурация pre-commit
+fail_fast: false
+minimum_pre_commit_version: '3.0.0'
