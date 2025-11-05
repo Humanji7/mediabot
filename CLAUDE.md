@@ -4,7 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-MediaBot is an AI-powered Social Media Marketing (SMM) automation platform for Russian small businesses. Built with React/TypeScript on the Lovable platform, it integrates with n8n workflows for AI processing.
+MediaBot is an AI-powered Social Media Marketing (SMM) automation platform for small businesses worldwide. Built with React/TypeScript on the Lovable platform, it integrates with n8n workflows for AI processing.
+
+**Target Market**: Global small businesses (SMBs) who need affordable, automated social media content creation and management.
 
 # Контекст проекта
 
