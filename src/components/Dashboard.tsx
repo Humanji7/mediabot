@@ -5,7 +5,7 @@ import { User, Building, Shield, LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
-  const { user, logout, isTeamTester } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -63,12 +63,8 @@ const Dashboard = () => {
                 <div className="flex items-center gap-2">
                   <Shield className="w-4 h-4 text-green-600" />
                   <span className="font-semibold">Роль:</span>
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                    isTeamTester
-                      ? 'bg-blue-100 text-blue-800'
-                      : 'bg-green-100 text-green-800'
-                  }`}>
-                    {isTeamTester ? 'Тестер команды' : 'Клиент'}
+                  <span className="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    {user.role === 'team_tester' ? 'Тестер команды' : 'Клиент'}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
@@ -81,8 +77,8 @@ const Dashboard = () => {
         </Card>
 
         {/* Feature Cards */}
-        <div className="grid md:grid-cols-2 gap-6">
-          <Card className="shadow-lg border-0 bg-white/80 backdrop-blur hover:shadow-xl transition-shadow">
+        <div className="flex justify-center">
+          <Card className="shadow-lg border-0 bg-white/80 backdrop-blur hover:shadow-xl transition-shadow max-w-md w-full">
             <CardHeader>
               <CardTitle className="text-lg">AI Чат-Помощник</CardTitle>
               <CardDescription>
@@ -98,69 +94,12 @@ const Dashboard = () => {
               </Button>
             </CardContent>
           </Card>
-
-          {isTeamTester && (
-            <Card className="shadow-lg border-0 bg-white/80 backdrop-blur hover:shadow-xl transition-shadow">
-              <CardHeader>
-                <CardTitle className="text-lg">Админ панель</CardTitle>
-                <CardDescription>
-                  Управление пользователями и системной аналитикой
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Button
-                  onClick={() => alert('Админ функции будут добавлены в следующей версии')}
-                  variant="outline"
-                  className="w-full"
-                >
-                  Управление пользователями
-                </Button>
-              </CardContent>
-            </Card>
-          )}
-
-          <Card className="shadow-lg border-0 bg-white/80 backdrop-blur hover:shadow-xl transition-shadow">
-            <CardHeader>
-              <CardTitle className="text-lg">Статистика</CardTitle>
-              <CardDescription>
-                Просмотр аналитики и результатов SMM кампаний
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Button
-                onClick={() => alert('Статистика будет доступна после настройки аналитики')}
-                variant="outline"
-                className="w-full"
-              >
-                Показать статистику
-              </Button>
-            </CardContent>
-          </Card>
-
-          <Card className="shadow-lg border-0 bg-white/80 backdrop-blur hover:shadow-xl transition-shadow">
-            <CardHeader>
-              <CardTitle className="text-lg">Настройки</CardTitle>
-              <CardDescription>
-                Конфигурация профиля и предпочтений
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Button
-                onClick={() => alert('Настройки профиля будут добавлены в следующей версии')}
-                variant="outline"
-                className="w-full"
-              >
-                Открыть настройки
-              </Button>
-            </CardContent>
-          </Card>
         </div>
 
         {/* System Info */}
         <div className="mt-8 text-center">
           <p className="text-sm text-gray-500">
-            🔒 MediaBot v2.0 - Enhanced Authentication System
-            {isTeamTester && ' | Team Tester Access'}
+            MediaBot - AI Content Platform
           </p>
         </div>
       </div>
